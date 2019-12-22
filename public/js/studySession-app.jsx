@@ -1,28 +1,62 @@
 'use strict';
 
-let timerLengthMinutes = 1;
 
-let stopTime = new Date();
-stopTime.setMinutes(stopTime.getMinutes() + timerLengthMinutes);
-stopTime.setSeconds(stopTime.getSeconds() + 1);
+/**
+ * Functions
+ */
+
+function getStopTime(timerLengthMinutes) {
+    let stopTime = new Date();
+    stopTime.setMinutes(stopTime.getMinutes() + timerLengthMinutes);
+    stopTime.setSeconds(stopTime.getSeconds() + 1);
+    return stopTime;
+}
 
 function timer() {
     let timeLeft = new Date(stopTime - new Date());
     return timeLeft;
 }
 
-let localStorageSubjects = JSON.parse(localStorage.getItem("subjects"));
-//localStorageSubjects.forEach(localStorageSubject =>{ console.log(`subjectFromJson: ${localStorageSubject}`) });
-let subjects = subjectFromJson( localStorageSubjects );
-//subjects.forEach(subject => {console.log(`Subject: ${subject}` ) });
-let index = 0;
-
-
-function getNextSubject(subjects, index){
-    let length = subjects.length;
-    return subjects[(index +1) % (length)]
+function moveToNextSubject(subjects) {
+    let index = localStorage.getItem("currentSubjectIndex");
+    index++;
+    localStorage.setItem("currentSubjectIndex", index % (subjects.length));
 }
 
+function getCurrentSubjectIndex() {
+    let index = localStorage.getItem("currentSubjectIndex");
+    let subjectsSize = JSON.parse(localStorage.getItem("subjects")).length;
+    index %= subjectsSize;
+    if (index == undefined) {
+        index = 0;
+    }
+
+    console.log("Index: " + index);
+    return index;
+}
+
+function getNextSubject(subjects, index) {
+    let length = subjects.length;
+    return subjects[(index + 1) % (length)]
+}
+
+
+
+
+/**
+ * Variables
+ */
+let localStorageSubjects = JSON.parse(localStorage.getItem("subjects"));
+let subjects = subjectFromJson(localStorageSubjects);
+
+let timerLengthMinutes = 1;
+let stopTime = getStopTime(timerLengthMinutes);
+let index = getCurrentSubjectIndex();
+
+
+/**
+ * React
+ */
 class StudySessionContainer extends React.Component {
     constructor(props) {
         super(props);
@@ -36,8 +70,6 @@ class StudySessionContainer extends React.Component {
             }
         };
     }
-
-
 
     componentDidMount() {
         this.myInterval = setInterval(() => {
@@ -75,7 +107,9 @@ class StudySessionContainer extends React.Component {
                     Time Left: <b> {this.state.minutesLeft} : {this.state.secondsLeft} </b>
                 </div>
                 {this.state.stopStates.second &&
-    <button className="btn btn-primary">Next Subject: { (getNextSubject(subjects, index)).getShortName() } </button>
+                    <button className="btn btn-primary" onClick={()=>{moveToNextSubject(subjects); window.location.reload();}}>
+                        Next Subject: {(getNextSubject(subjects, index)).getShortName()}
+                    </button>
                 }
             </div>
         )
