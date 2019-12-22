@@ -4,6 +4,7 @@ let timerLengthMinutes = 15;
 
 let stopTime = new Date();
 stopTime.setMinutes(stopTime.getMinutes() + timerLengthMinutes);
+stopTime.setSeconds(stopTime.getSeconds() + 1);
 
 function timer() {
     let timeLeft = new Date(stopTime - new Date());
@@ -18,8 +19,13 @@ class StudySessionContainer extends React.Component {
             subject: {
                 name: "Computer Science"
             },
-            minutesLeft: timerLengthMinutes,
-            secondsLeft: 0
+            minutesLeft: (timerLengthMinutes).toLocaleString(undefined, { minimumIntegerDigits: 2 }),
+            secondsLeft: (0).toLocaleString(undefined, { minimumIntegerDigits: 2 }),
+            stopStates: {
+                minute: false,
+                second: false
+            }
+
         };
     }
 
@@ -27,10 +33,29 @@ class StudySessionContainer extends React.Component {
 
     componentDidMount() {
         this.myInterval = setInterval(() => {
-            this.setState(() => ({
-                minutesLeft: timer().getMinutes(),
-                secondsLeft: timer().getSeconds()
-            }))
+
+            if (!this.state.stopStates.second) {
+                this.setState(() => ({
+                    minutesLeft: timer().getMinutes().toLocaleString(undefined, { minimumIntegerDigits: 2 }),
+                    secondsLeft: timer().getSeconds().toLocaleString(undefined, { minimumIntegerDigits: 2 })
+                }))
+            }
+
+            if (this.state.minutesLeft == "00") {
+                let stopStates = this.state.stopStates;
+                stopStates.minute = true;
+                this.setState({
+                    stopStates: stopStates
+                });
+            }
+            if (this.state.stopStates.minute && this.state.secondsLeft == "00") {
+                let stopStates = this.state.stopStates;
+                stopStates.second = true;
+                this.setState(() => ({
+                    stopStates: stopStates
+                }));
+                console.log("stopStates.second: " + this.state.stopStates.second);
+            }
         }, 1000)
     }
 
@@ -38,11 +63,15 @@ class StudySessionContainer extends React.Component {
         return (
             <div>
                 <h3>{this.state.subject.name}</h3>
-                Timer Left: {this.state.minutesLeft} : {this.state.secondsLeft}
+                <div>
+                    Time Left: <b> {this.state.minutesLeft} : {this.state.secondsLeft} </b>
+                </div>
+                {this.state.stopStates.second &&
+                    <button className="btn btn-primary">Next Subject</button>
+                }
             </div>
         )
     }
-
 }
 
 ReactDOM.render(
