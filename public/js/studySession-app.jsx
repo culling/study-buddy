@@ -41,8 +41,6 @@ function getNextSubject(subjects, index) {
 }
 
 
-
-
 /**
  * Variables
  */
@@ -67,7 +65,9 @@ class StudySessionContainer extends React.Component {
             stopStates: {
                 minute: false,
                 second: false
-            }
+            },
+            playAlert: false,
+            alertPlayed: false
         };
     }
 
@@ -81,6 +81,10 @@ class StudySessionContainer extends React.Component {
                 }))
             }
 
+            if (this.state.alertPlayed) {
+                return;
+            }
+
             if (this.state.minutesLeft == "00") {
                 let stopStates = this.state.stopStates;
                 stopStates.minute = true;
@@ -92,11 +96,29 @@ class StudySessionContainer extends React.Component {
                 let stopStates = this.state.stopStates;
                 stopStates.second = true;
                 this.setState(() => ({
-                    stopStates: stopStates
+                    stopStates: stopStates,
+
                 }));
                 console.log("stopStates.second: " + this.state.stopStates.second);
             }
+
+            if (this.state.stopStates.second) {
+                this.setState(() => ({
+                    playAlert: true
+                }));
+                this.playAudio();
+
+            }
         }, 1000)
+    }
+
+    playAudio() {
+        const audioEl = document.getElementsByClassName("audio-element")[0]
+        audioEl.play();
+
+        this.setState(() => ({
+            alertPlayed: true
+        }));
     }
 
     render() {
@@ -106,8 +128,16 @@ class StudySessionContainer extends React.Component {
                 <div>
                     Time Left: <b> {this.state.minutesLeft} : {this.state.secondsLeft} </b>
                 </div>
+
+                {this.state.playAlert &&
+                    <div>
+                        <audio className="audio-element" controls volume="0.3">
+                            <source src="/resources/shishio-doshi.mp3"></source>
+                        </audio>
+                    </div>
+                }
                 {this.state.stopStates.second &&
-                    <button className="btn btn-primary" onClick={()=>{moveToNextSubject(subjects); window.location.reload();}}>
+                    <button className="btn btn-primary" onClick={() => { moveToNextSubject(subjects); window.location.reload(); }}>
                         Next Subject: {(getNextSubject(subjects, index)).getShortName()}
                     </button>
                 }
