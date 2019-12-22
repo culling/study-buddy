@@ -16,6 +16,7 @@ module.exports = function(){
    var index = require("./../server/routes/index.route.server");
    app.use("/", index);
 
+   
    //static files
    app.use(express.static('./public'));
 
