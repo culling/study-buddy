@@ -1,6 +1,6 @@
 'use strict';
 
-let timerLengthMinutes = 15;
+let timerLengthMinutes = 1;
 
 let stopTime = new Date();
 stopTime.setMinutes(stopTime.getMinutes() + timerLengthMinutes);
@@ -11,21 +11,29 @@ function timer() {
     return timeLeft;
 }
 
+let localStorageSubjects = JSON.parse(localStorage.getItem("subjects"));
+//localStorageSubjects.forEach(localStorageSubject =>{ console.log(`subjectFromJson: ${localStorageSubject}`) });
+let subjects = subjectFromJson( localStorageSubjects );
+//subjects.forEach(subject => {console.log(`Subject: ${subject}` ) });
+let index = 0;
+
+
+function getNextSubject(subjects, index){
+    let length = subjects.length;
+    return subjects[(index +1) % (length)]
+}
 
 class StudySessionContainer extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            subject: {
-                name: "Computer Science"
-            },
+            subject: subjects[index],
             minutesLeft: (timerLengthMinutes).toLocaleString(undefined, { minimumIntegerDigits: 2 }),
             secondsLeft: (0).toLocaleString(undefined, { minimumIntegerDigits: 2 }),
             stopStates: {
                 minute: false,
                 second: false
             }
-
         };
     }
 
@@ -62,12 +70,12 @@ class StudySessionContainer extends React.Component {
     render() {
         return (
             <div>
-                <h3>{this.state.subject.name}</h3>
+                <h3>{this.state.subject.getDisplayName()}</h3>
                 <div>
                     Time Left: <b> {this.state.minutesLeft} : {this.state.secondsLeft} </b>
                 </div>
                 {this.state.stopStates.second &&
-                    <button className="btn btn-primary">Next Subject</button>
+    <button className="btn btn-primary">Next Subject: { (getNextSubject(subjects, index)).getShortName() } </button>
                 }
             </div>
         )

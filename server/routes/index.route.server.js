@@ -7,7 +7,6 @@ const querystring   = require("querystring");
 let express         = require("express");
 let router          = express.Router();
 let path            = require("path");
-//var http = require("http");
 
 router.get("/api", (request, response) => {
     let query = request.query;

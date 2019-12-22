@@ -1,12 +1,21 @@
 'use strict';
-const e = React.createElement;
+//const e = React.createElement;
 
-class ReactContainer extends React.Component{
+localStorage.setItem(
+    "subjects", JSON.stringify(
+        [
+            new Subject("Structured Methods", "SWEN301"),
+            new Subject("Introduction to Artificial Intelligence", "COMP307"),
+            new Subject("Applied Statistics 2A", "STAT292")
+        ])
+);
+
+class ReactContainer extends React.Component {
     constructor(props) {
         super();
     }
-    
-    render(){
+
+    render() {
         return (
             <p>My React Component</p>
         )
@@ -14,6 +23,6 @@ class ReactContainer extends React.Component{
 
 }
 
-ReactDOM.render (
+ReactDOM.render(
     <ReactContainer />, document.getElementById('react-container')
 );
