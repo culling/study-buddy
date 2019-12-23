@@ -1,56 +1,75 @@
-'use strict';
-
+//'use strict';
+//import React from 'react';
+//import {render} from 'react-dom';
+//import SubjectComponent from "./subject-component.jsx";
 
 /**
  * Functions
  */
 
- /**
- * Variables
- */
-let localStorageSubjects = JSON.parse(localStorage.getItem("subjects"));
-let subjects = subjectFromJson(localStorageSubjects);
-
-let timerLengthMinutes = 1;
-let stopTime = getStopTime(timerLengthMinutes);
-let index = getCurrentSubjectIndex();
 
 
 /**
- * React
- */
-class StudySessionContainer extends React.Component {
+* Variables
+*/
+let localStorageSubjects = JSON.parse(localStorage.getItem("subjects"));
+let subjects = subjectFromJson(localStorageSubjects);
+
+
+
+class SubjectComponent extends React.Component {
     constructor(props) {
         super(props);
+        console.log(props);
         this.state = {
-        };
+            subject: props.subject
+        }
+    }
+
+
+    render() {
+        return (
+            <div className="card col-sm-6"  >
+                <div className="card-title">
+                    {this.state.subject.name}
+                </div>
+                <div className="card-body">
+                    <div className="card-text">
+                        <div className="courseCode row">
+                            <span className="col-sm-6">Course Code: </span>
+                            <input className="col-sm-6" type="text" id={"courseCode"+"-"+this.props.subject.courseCode } defaultValue={this.state.subject.courseCode} />
+                        </div>
+                        <div className="displayName row">
+                            <span className="col-sm-6">Display Name: </span>
+                            <input className="col-sm-6" type="text" id={"displayName"+"-"+this.props.subject.courseCode} defaultValue={this.state.subject.displayName} />
+                        </div>
+                    </div>
+                </div>
+            </div>)
+    }
+}
+
+
+class SubjectsContainer extends React.Component {
+    constructor(props) {
+        super(props);
     }
 
     render() {
         return (
-            <div>
-                <h3>{this.state.subject.getDisplayName()}</h3>
-                <div>
-                    Time Left: <b> {this.state.minutesLeft} : {this.state.secondsLeft} </b>
-                </div>
+            <div className="subjects-container row">
+                {subjects.map((subject, i) => {
+                    return (
+                        <SubjectComponent key={i} subject={subject} />
+                    )
+                })}
 
-                {this.state.playAlert &&
-                    <div>
-                        <audio className="audio-element" controls volume="0.3">
-                            <source src="/resources/shishio-doshi.mp3"></source>
-                        </audio>
-                    </div>
-                }
-                {this.state.stopStates.second &&
-                    <button className="btn btn-primary" onClick={() => { moveToNextSubject(subjects); window.location.reload(); }}>
-                        Next Subject: {(getNextSubject(subjects, index)).getShortName()}
-                    </button>
-                }
             </div>
         )
     }
 }
 
+
 ReactDOM.render(
-    <StudySessionContainer />, document.getElementById('study-session-container')
+    <SubjectsContainer />, document.getElementById('subjects-container')
 );
