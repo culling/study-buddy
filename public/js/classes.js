@@ -21,11 +21,14 @@ class Subject {
     }
 }
 
-function subjectFromJson(subjectsFromJson) {
-    let subjects = [];
-    console.log(subjectsFromJson);
+let localStorageSubjects = JSON.parse(localStorage.getItem("subjects"));
+let subjects = subjectFromJson(localStorageSubjects);
 
-    subjectsFromJson.forEach(subjectFromJson => {
+function subjectFromJson(subjectsFromJsonParse) {
+    let subjects = [];
+    console.log(subjectsFromJsonParse);
+
+    subjectsFromJsonParse.forEach(subjectFromJson => {
         subjects.push( new Subject(
             subjectFromJson.name ? subjectFromJson.name : "",
             subjectFromJson.courseCode ? subjectFromJson.courseCode : "",
@@ -34,4 +37,11 @@ function subjectFromJson(subjectsFromJson) {
     }) ;
 
     return subjects;
+}
+
+function saveSubjectsToLocal(subjects){
+    console.log(subjects);
+
+    localStorage.setItem("subjects", JSON.stringify(subjects));
+    location.reload();
 }
