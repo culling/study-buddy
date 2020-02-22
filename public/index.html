@@ -1,6 +1,9 @@
 <html>
 
 <head>
+    <!-- Manifest -->
+    <link rel="manifest" href="manifest.json"> 
+
     <!-- Mobile Viewport -->
     <meta name="viewport" content="initial-scale=1, maximum-scale=1">
     <!-- jQuery-->
@@ -41,6 +44,16 @@
     </div>
     <script type="text/babel" src="js/navbar.jsx"></script>
     <script type="text/babel" src="js/app.jsx"> </script>
+
+    <script>
+        if('serviceWorker' in navigator){
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js');
+            });
+        }        
+    </script>
+
+
 </body>
 
 </html>

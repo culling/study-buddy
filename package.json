@@ -12,6 +12,7 @@
   },
   "scripts": {
     "start": "nodemon server.js ",
+    "serviceWorker": "workbox generateSW",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",

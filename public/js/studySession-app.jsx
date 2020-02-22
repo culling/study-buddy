@@ -47,7 +47,7 @@ function getNextSubject(subjects, index) {
 let localStorageSubjects = JSON.parse(localStorage.getItem("subjects"));
 let subjects = subjectFromJson(localStorageSubjects);
 
-let timerLengthMinutes = 1;
+let timerLengthMinutes = 15;
 let stopTime = getStopTime(timerLengthMinutes);
 let index = getCurrentSubjectIndex();
 
