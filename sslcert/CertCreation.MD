@@ -1,4 +1,30 @@
-openssl req -config sslcert/san.cnf -new -x509 -days 825 -out sslcert/server.crt -keyout sslcert/server.key
+#### Reference
+https://stackoverflow.com/questions/57565665/one-self-signed-cert-to-rule-them-all-chrome-android-and-ios
+
+#### Command
+openssl req -config sslcert/san.cnf -keyout sslcert/server.key -new -x509 -days 825 -out sslcert/server.crt
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # Background Articles
 https://devcenter.heroku.com/articles/ssl-certificate-self
