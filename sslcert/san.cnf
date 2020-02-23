@@ -1,0 +1,26 @@
+[ req ]
+default_bits = 2048
+encrypt_key  = no # Change to encrypt the private key using des3 or similar
+default_md   = sha256
+prompt       = no
+utf8         = yes
+
+distinguished_name = req_distinguished_name
+req_extensions     = req_ext
+[ req_distinguished_name ]
+countryName                 = NZ
+stateOrProvinceName         = Wellington
+localityName               = Wellington
+organizationName           = StudyBuddySelfSigned
+commonName                 = GeneCulling
+
+[req_ext]
+basicConstraints     = CA:TRUE
+subjectKeyIdentifier = hash
+keyUsage             = digitalSignature, keyEncipherment
+extendedKeyUsage     = clientAuth, serverAuth
+subjectAltName       = @alt_names
+
+[alt_names]
+DNS.1   = localhost
+DNS.2   = DESKTOP-4T0T5OT

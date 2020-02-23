@@ -2,7 +2,7 @@
 
 <head>
     <!-- Manifest -->
-    <link rel="manifest" href="manifest.json"> 
+    <link rel="manifest" href="manifest.json">
 
     <!-- Mobile Viewport -->
     <meta name="viewport" content="initial-scale=1, maximum-scale=1">
@@ -10,7 +10,8 @@
     <script src="bower_components/jquery/dist/jquery.js"></script>
     <!-- Bootstrap -->
     <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
-    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css"></link>
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+    </link>
     <!-- Materialize -->
     <!-- 
     <script src="bower_components/materialize/dist/js/materialize.js"></script>
@@ -46,11 +47,26 @@
     <script type="text/babel" src="js/app.jsx"> </script>
 
     <script>
-        if('serviceWorker' in navigator){
+        if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('sw.js');
             });
-        }        
+        }
+
+        // function showAddToHomeScreen() {
+        //     var a2hsBtn = document.querySelector(".ad2hs-prompt");
+        //     a2hsBtn.style.display = "block";
+        //     a2hsBtn.addEventListener("click", addToHomeScreen);
+        // }
+
+        // var deferredPrompt;
+        // window.addEventListener('beforeinstallprompt', function (e) {
+        //     // Prevent Chrome 67 and earlier from automatically showing the prompt
+        //     e.preventDefault();
+        //     // Stash the event so it can be triggered later.
+        //     deferredPrompt = e;
+        //     showAddToHomeScreen();
+        // });
     </script>
 
 
