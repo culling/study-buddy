@@ -14,6 +14,11 @@ router.get("/api", (request, response) => {
     response.json( query );
 });
 
+router.get("/about", (request, response) => {
+    console.log("/about hit!");
+    response.sendfile( path.join(__dirname+"./../../public/about.html") );
+});
+
 router.get("/marks", (request, response) => {
     console.log("/marks hit!");
     response.sendfile( path.join(__dirname+"./../../public/marks.html") );

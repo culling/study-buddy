@@ -11,7 +11,7 @@
     "nodemon": "^2.0.2"
   },
   "scripts": {
-    "start": "nodemon server.js",
+    "start": "npm run serviceWorker && node server.js",
     "serviceWorker": "workbox generateSW",
     "test": "echo \"Error: no test specified\" && exit 1",
     "install:global": "npm install bower workbox nodemon -g"

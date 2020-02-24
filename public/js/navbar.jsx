@@ -19,7 +19,9 @@ class NavbarContainer extends React.Component {
                         <a className="nav-item nav-link" href="studySession">New Study Session</a>
                         <a className="nav-item nav-link" href="subjects">Subjects</a>
                         <a className="nav-item nav-link" href="marks">Marks</a>
-                        <a className="nav-item nav-link disabled" href="#" tabIndex="-1" aria-disabled="true">Disabled</a>
+                        <a className="nav-item nav-link" href="about">About</a>
+
+                        <a className="nav-item nav-link disabled" href="#" tabIndex="-1" aria-disabled="true">Coming Soon</a>
                     </div>
                 </div>
             </nav>)
