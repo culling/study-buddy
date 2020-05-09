@@ -15,11 +15,10 @@
 
 
 
-class SubjectComponent extends React.Component {
+class SubjectContainer extends React.Component {
     constructor(props) {
         super(props);
         console.log(props);
-
     }
 
     deleteSubject() {
@@ -125,7 +124,7 @@ class SubjectsContainer extends React.Component {
 
                     {subjects.map((subject, i) => {
                         return (
-                            <SubjectComponent key={i} subject={subject} />
+                            <SubjectContainer key={i} subject={subject} />
                         )
                     })}
 

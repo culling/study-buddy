@@ -1,9 +1,50 @@
+class Assessment {
+    constructor(name, finalGradeWeight, marks, totalMarks){
+        this.name = name;
+        this.finalGradeWeight = finalGradeWeight;
+        this.marks = marks;
+        this.totalMarks = totalMarks
+    }
+
+    getMarks(){
+        return `${this.marks}/${this.totalMarks}`;
+    }
+
+    getScore(){
+        return this.marks/this.totalMarks;
+    }
+
+    getFinalGradeWeight(){
+        return this.finalGradeWeight;
+    }
+
+    getFinalGradeImpact(){
+        return this.getScore() * this.finalGradeWeight;
+    }
+
+    setName(name){
+        this.name = name;
+    }
+
+    setMarks(marks){
+        this.marks = marks;
+    }
+    
+    setTotalMarks(totalMarks){
+        this.totalMarks = totalMarks;
+    }
+
+}
+
 class Subject {
+    assessments = []
     constructor(name, courseCode, displayName) {
         this.name = name;
         this.courseCode = courseCode;
-        this.displayName = displayName? displayName : null
-        ;
+        this.displayName = displayName? displayName : null;
+
+        let enrolement = new Assessment("Enrolement", 0, 100, 100);
+        this.addAssessment(enrolement);
     }
 
     getDisplayName() {
@@ -18,6 +59,14 @@ class Subject {
             return this.shortName;
         }
         return `${this.courseCode}`;
+    }
+
+    getAssessments(){
+        return this.assessments;
+    }
+
+    addAssessment(assessment){
+        this.assessments.push(assessment);
     }
 }
 
