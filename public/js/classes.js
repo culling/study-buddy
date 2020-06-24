@@ -1,50 +1,51 @@
 class Assessment {
-    constructor(name, finalGradeWeight, marks, totalMarks){
+
+    constructor(name, finalGradeWeight, marks, totalMarks) {
         this.name = name;
         this.finalGradeWeight = finalGradeWeight;
         this.marks = marks;
         this.totalMarks = totalMarks
     }
 
-    getMarks(){
+    getMarks() {
         return `${this.marks}/${this.totalMarks}`;
     }
 
-    getScore(){
-        return this.marks/this.totalMarks;
+    getScore() {
+        return this.marks / this.totalMarks;
     }
 
-    getFinalGradeWeight(){
+    getFinalGradeWeight() {
         return this.finalGradeWeight;
     }
 
-    getFinalGradeImpact(){
+    getFinalGradeImpact() {
         return this.getScore() * this.finalGradeWeight;
     }
 
-    setName(name){
+    setName(name) {
         this.name = name;
     }
 
-    setMarks(marks){
+    setMarks(marks) {
         this.marks = marks;
     }
-    
-    setTotalMarks(totalMarks){
+
+    setTotalMarks(totalMarks) {
         this.totalMarks = totalMarks;
     }
 
 }
 
 class Subject {
-    assessments = []
+
     constructor(name, courseCode, displayName) {
         this.name = name;
         this.courseCode = courseCode;
-        this.displayName = displayName? displayName : null;
-
-        let enrolement = new Assessment("Enrolement", 0, 100, 100);
-        this.addAssessment(enrolement);
+        this.displayName = displayName ? displayName : null;
+        this.assessments = [];
+        // let enrolement = new Assessment("Enrolement", 0, 100, 100);
+        // this.addAssessment(enrolement);
     }
 
     getDisplayName() {
@@ -61,11 +62,15 @@ class Subject {
         return `${this.courseCode}`;
     }
 
-    getAssessments(){
+    getAssessments() {
+        if(this.assessments.length == 0){
+            let enrolement = new Assessment("Enrolement", 0, 100, 100);
+            this.addAssessment(enrolement);
+        }
         return this.assessments;
     }
 
-    addAssessment(assessment){
+    addAssessment(assessment) {
         this.assessments.push(assessment);
     }
 }
@@ -78,19 +83,28 @@ function subjectFromJson(subjectsFromJsonParse) {
     console.log(subjectsFromJsonParse);
 
     subjectsFromJsonParse.forEach(subjectFromJson => {
-        subjects.push( new Subject(
+        let newSubject = new Subject(
             subjectFromJson.name ? subjectFromJson.name : "",
             subjectFromJson.courseCode ? subjectFromJson.courseCode : "",
-            subjectFromJson.displayName? subjectFromJson.displayName : ""
-        ));
-    }) ;
+            subjectFromJson.displayName ? subjectFromJson.displayName : ""
+        );
+
+
+        subjectFromJson.assessments.forEach(json => {
+            let assessment = new Assessment(json.name, json.finalGradeWeight, json.marks, json.totalMarks);
+            console.log("assessment: ", assessment);
+            newSubject.addAssessment(assessment);
+        });
+
+        subjects.push(newSubject);
+    });
 
     return subjects;
 }
 
-function saveSubjectsToLocal(subjects){
+function saveSubjectsToLocal(subjects) {
     console.log(subjects);
 
     localStorage.setItem("subjects", JSON.stringify(subjects));
-    location.reload();
+    // location.reload();
 }
