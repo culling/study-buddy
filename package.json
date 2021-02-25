@@ -28,7 +28,6 @@
   },
   "scripts": {
     "start": "node -r ts-node/register ./server",
-    "dev:fe": "cd ./client && npm run dev:src",
     "dev:be": "nodemon",
     "test": "jest",
     "cypress": "./node_modules/.bin/cypress open"

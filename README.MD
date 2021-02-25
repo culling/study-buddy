@@ -21,3 +21,46 @@ When studying I used a mix of pomodoro and interleaved learning for study and re
 
 
 ## Screenshots
+
+
+# Instructions 
+When the app is run, the site is available from http://localhost:5000
+
+## Server - Node.js
++ Node.JS written in typescript
+
+To run the server in dev mode. This will rebuild on each saved edit via nodemon.
+To modify the nodemon files edit the nodemon.json file
+``` 
+npm run dev:be
+```
+
+To run the server standalone 
+```
+npm start
+```
+
+## Client - Html with web components
+Client code for the front end is in the folder client_build.
+
+
+## Unit tests
+![jest tests](docs/screenshots/jest-screenshot-01.png)
+
+Unit tests are done by running 
+```
+npm test
+```
+
+## Integration tests
+### Cypress
+![Cypress Screenshot](docs/screenshots/cypress-screenshot-01.png)
+
+Tests are stored within ./cypress/integration
+
+Full cypress documentation https://www.cypress.io/
+
+### Running Cypress
+```
+npm run cypress
+```
