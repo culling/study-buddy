@@ -1,7 +1,81 @@
 <!DOCTYPE html>
+<html lang="en">
 <head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-169446379-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'UA-169446379-1');
+    </script>
+    <title>Study Buddy</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
+    <!-- Load d3.js -->
+    <script src="https://d3js.org/d3.v4.js"></script>
+
+    
+    <!-- LineIcons-->
+    <!-- <link href="https://cdn.lineicons.com/2.0/LineIcons.css" rel="stylesheet"> -->
+
+    <!-- DevIcon -->
+    <!-- <link rel="stylesheet"
+        href="https://cdn.rawgit.com/konpa/devicon/df6431e323547add1b4cf45992913f15286456d3/devicon.min.css"> -->
+
+    <!-- <link href="css/normalize-8.0.1.css" rel="stylesheet"> -->
+    <link href="/css/main.css" rel="stylesheet">
+    <!-- https://1linelayouts.glitch.me/ -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Original Console log site = https://benmccormick.org/ascii-kusty -->
+    <script>
+        console.log("Ha! Nice to see you looking at the source code and console.\n\n\n%c^_^", 'font-weight:bold;font-size:large')
+    </script>
+
+    <!-- <script src="js/projectsInfo.js"></script>
+    <script src="js/utils.js"></script> -->
+
+    <script src="js/components/index.js"></script>
 </head>
+
 <body>
-    Test!
+    <div class="grid-left-side body-left"></div>
+    <div class="grid-center">
+        <header-component></header-component>
+        <div class="body-center">
+
+            <grades-graph grades='{name: "grades"}'></grades-graph>
+
+
+        </div>
+        <footer class="page-footer">
+        </footer>
+
+
+    </div>
+    <div class="grid-right-side body-right"></div>
+
+
+
+
+
+    <!-- Bootstrap JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+    <!-- Font -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+
 </body>
+
+</html>
