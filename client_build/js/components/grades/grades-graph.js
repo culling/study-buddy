@@ -18,21 +18,25 @@ class GradesGraph extends HTMLElement {
     const data = [
       {
         courseShortName: "COMP307",
-        finalGradeImpactPercent: 92.52369008,
-        sumTotalFinalGrade: 100,
+        courseFullName: "Introduction to Artificial Intelligence",
+        finalGradeImpactPercent: 40.52369008,
+        sumTotalFinalGrade: 70,
       },
       {
         courseShortName: "STAT292",
+        courseFullName: "Applied Statistics 2A",
         finalGradeImpactPercent: 86.99095588,
         sumTotalFinalGrade: 101.75,
       },
       {
         courseShortName: "SWEN301",
+        courseFullName: "Structured Methods",
         finalGradeImpactPercent: 90.13,
         sumTotalFinalGrade: 100,
       },
       {
         courseShortName: "SWEN326",
+        courseFullName: "Safety-Critical Systems",
         finalGradeImpactPercent: 88.78287179,
         sumTotalFinalGrade: 100,
       },
@@ -60,8 +64,13 @@ class GradesGraph extends HTMLElement {
     //   .text((element)=>{return element.courseShortName})
     //   ;
     const svgConfig = {
-      height: 100,
-      width: 100,
+      height: 120,
+      width: 1000,
+      bar: {
+        height: 100,
+        width: 120,
+        margin: 20,
+      },
     };
 
     // Make the SVG container
@@ -70,23 +79,71 @@ class GradesGraph extends HTMLElement {
       .style("height", svgConfig.height)
       .style("width", svgConfig.width);
 
-      //Add the bars
-    svg
+    //Add the bars
+    const bars = svg
       .selectAll("rect")
       .data(data)
       .enter()
       .append("rect")
       .attr("x", (d, i) => {
-        return i * 10;
+        return i * svgConfig.bar.width;
       })
-      .attr("y", (d) =>{
-        return svgConfig.height - d.finalGradeImpactPercent;
+      .attr("y", (d) => {
+        return svgConfig.bar.height - d.sumTotalFinalGrade;
       })
-      .style("width", 8)
+      .style("width", svgConfig.bar.width - svgConfig.bar.margin)
       .style("height", (d) => {
-        return  d.finalGradeImpactPercent;
+        return d.sumTotalFinalGrade;
       })
-      .style("color", "red");
+      .style("fill", "orange")
+      .append("title")
+      .text((d)=>{
+        return d.courseFullName;
+      });
+
+    // svg
+    //   .selectAll("rect")
+    //   .data(data)
+    //   .enter()
+    //   .append("rect")
+    //   .attr("x", (d, i) => {
+    //     return i * svgConfig.bar.width;
+    //   })
+    //   .attr("y", (d) => {
+    //     return svgConfig.bar.height - d.finalGradeImpactPercent;
+    //   })
+    //   .style("width", svgConfig.bar.width - svgConfig.bar.margin)
+    //   .style("height", (d) => {
+    //     return d.finalGradeImpactPercent;
+    //   })
+    //   .style("fill", "red")
+      
+    //   // .append("title")
+    //   // .text((d)=>{
+    //   //   return d.courseFullName;
+    //   // });
+
+    // // Add labels
+    svg
+      .selectAll("text")
+      .data(data)
+      .enter()
+      .append("text")
+      .attr("x", (d, i) => {
+        return i * svgConfig.bar.width;
+      })
+      .attr("y", (d, i) => {
+        const labelHeight = svgConfig.height;
+        if (labelHeight > 0) {
+          return labelHeight;
+        }
+        return labelHeight + 3;
+      })
+      .text((d) => {
+        return d.courseShortName;
+      });
+
+
   };
 }
 
