@@ -1,21 +1,14 @@
 class GradesGraph extends HTMLElement {
   constructor() {
     super();
-  }
+    
+    // Apply external styles to the shadow dom
+    const linkElem = document.createElement('link');
+    linkElem.setAttribute('rel', 'stylesheet');
+    linkElem.setAttribute('href', 'css/main.css');
 
-  connectedCallback() {
-    this.innerHTML = `
-    <!-- Add a svg shape. Note that the 'target' class is attributed to the circle -->
-    <div>
-    <div id="grades-graph" class="grades-graph"></div>
-    </div>
-    <br/>
-        <b>a beautiful graph</b>
-        ${JSON.stringify(this.grades)}
-        `;
-    const target = d3.select(".grades-graph"); // select the elements that have the class 'target'
-
-    const data = [
+    
+    this.data = [
       {
         courseShortName: "COMP307",
         courseFullName: "Introduction to Artificial Intelligence",
@@ -41,7 +34,40 @@ class GradesGraph extends HTMLElement {
         sumTotalFinalGrade: 100,
       },
     ];
-    this.draw(target, data);
+  }
+
+  
+  connectedCallback() {
+    this.innerHTML = `
+    <style>
+      .grades-graph {
+        grid-area: "grades-graph";
+      }
+
+      .grades-graph-container {
+        display: grid;
+        grid-template-columns: 1fr 500px 1fr;
+        gap: 15px 10px;
+        grid-template-areas: ". grades-graph .";
+        justify-items: center;
+      }
+    </style>
+    
+    <div id="grades-graph-container" class="grades-graph-container">
+      <div></div>
+      <div>
+        <div id="grades-graph" class="grades-graph"></div>
+    
+        <br />
+        <b>a beautiful graph</b>
+      </div>
+      <div></div>
+    </div>;
+  
+        `;
+    const target = d3.select(".grades-graph"); // select the elements that have the class 'target'
+
+    this.draw(target, this.data);
   }
 
   draw = (target, data) => {
@@ -68,7 +94,7 @@ class GradesGraph extends HTMLElement {
 
     const svgConfig = {
       height: 120,
-      width: 1000,
+      width: 500,
       margins: {
         left: 0,
         top: 30,
