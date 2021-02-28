@@ -56,72 +56,86 @@ class GradesGraph extends HTMLElement {
     });
 
     console.log("Labels: ", labels);
-    // target
-    //   .selectAll("div")
-    //   .data(data)
-    //   .enter()
-    //   .append("h1")
-    //   .text((element)=>{return element.courseShortName})
-    //   ;
+    
+    const graphTheme = {
+      total:{
+        fill: "#1E90FF"
+      },
+      impact:{
+        fill: "#87CEEB"
+      }
+    }
+
     const svgConfig = {
       height: 120,
       width: 1000,
+      margins: {
+        left: 0,
+        top: 30,
+        bottom: 30
+      },
       bar: {
         height: 100,
         width: 120,
-        margin: 20,
+        margins: {
+          left:20,
+          top: 0,
+          right: 0, 
+          bottom: 0
+        }
       },
     };
 
     // Make the SVG container
     const svg = target
       .append("svg")
-      .style("height", svgConfig.height)
+      .style("height",  svgConfig.margins.top + svgConfig.height + svgConfig.margins.bottom)
       .style("width", svgConfig.width);
 
     //Add the bars
     const bars = svg
-      .selectAll("rect")
+      .selectAll(".bar.field1")
       .data(data)
       .enter()
       .append("rect")
+      .attr("class", "bar field1")
       .attr("x", (d, i) => {
         return i * svgConfig.bar.width;
       })
       .attr("y", (d) => {
-        return svgConfig.bar.height - d.sumTotalFinalGrade;
+        return this.getBarDrawingHeight(svgConfig) - d.sumTotalFinalGrade;
       })
-      .style("width", svgConfig.bar.width - svgConfig.bar.margin)
+      .style("width", svgConfig.bar.width - svgConfig.bar.margins.left)
       .style("height", (d) => {
         return d.sumTotalFinalGrade;
       })
-      .style("fill", "orange")
+      .style("fill", graphTheme.total.fill)
       .append("title")
       .text((d)=>{
         return d.courseFullName;
       });
 
-    // svg
-    //   .selectAll("rect")
-    //   .data(data)
-    //   .enter()
-    //   .append("rect")
-    //   .attr("x", (d, i) => {
-    //     return i * svgConfig.bar.width;
-    //   })
-    //   .attr("y", (d) => {
-    //     return svgConfig.bar.height - d.finalGradeImpactPercent;
-    //   })
-    //   .style("width", svgConfig.bar.width - svgConfig.bar.margin)
-    //   .style("height", (d) => {
-    //     return d.finalGradeImpactPercent;
-    //   })
-    //   .style("fill", "red")
-      
-    //   // .append("title")
-    //   // .text((d)=>{
-    //   //   return d.courseFullName;
-    //   // });
+    svg
+      .selectAll(".bar.field2")
+      .data(data)
+      .enter()
+      .append("rect")
+      .attr("class", "bar field2")
+      .attr("x", (d, i) => {
+        return i * svgConfig.bar.width;
+      })
+      .attr("y", (d) => {
+        return this.getBarDrawingHeight(svgConfig) - d.finalGradeImpactPercent;
+      })
+      .style("width", svgConfig.bar.width - svgConfig.bar.margins.left)
+      .style("height", (d) => {
+        return d.finalGradeImpactPercent;
+      })
+      .style("fill", graphTheme.impact.fill)
+      .append("title")
+      .text((d)=>{
+        return d.courseFullName;
+      });
 
     // // Add labels
     svg
@@ -133,7 +147,7 @@ class GradesGraph extends HTMLElement {
         return i * svgConfig.bar.width;
       })
       .attr("y", (d, i) => {
-        const labelHeight = svgConfig.height;
+        const labelHeight = this.getBarDrawingHeight(svgConfig) + svgConfig.margins.bottom;
         if (labelHeight > 0) {
           return labelHeight;
         }
@@ -145,6 +159,10 @@ class GradesGraph extends HTMLElement {
 
 
   };
+
+  getBarDrawingHeight = (svgConfig)=>{
+    return svgConfig.height + svgConfig.margins.top;
+  }
 }
 
 customElements.define("grades-graph", GradesGraph);
