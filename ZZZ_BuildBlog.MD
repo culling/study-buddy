@@ -16,7 +16,7 @@
 
 ## Useful Resources
 + Free Code Camp - D3 for Data visualisations - https://www.freecodecamp.org/learn/data-visualization/data-visualization-with-d3
-
++ CSS Grid Guide - https://css-tricks.com/snippets/css/complete-guide-grid/
 ***
 # Week 1 - Friday (26 02 2021)
 ![First Cypress Test](docs/build_blog/week1-tests-01.png)
