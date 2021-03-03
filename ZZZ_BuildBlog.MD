@@ -1,23 +1,3 @@
-***
-# Week 3 - Friday (12 03 2021)
-![First Cypress Test](docs/build_blog/)
-## General progress
-
-
-## New Features
-+ No new general features
-## New Bugs
-+ No new bugs found
-
-## Tooling update
-+ No tooling updates
-
-## Lessons Learnt
-+ 
-
-## Useful Resources
-+ 
-+ 
 
 ***
 # Week 2 - Friday (5 03 2021)
