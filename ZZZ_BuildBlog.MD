@@ -1,15 +1,38 @@
 ***
-# Week 2 - Friday (5 01 2021)
-![First Cypress Test](docs/build_blog/week2-screenshot-01.png)
+# Week 3 - Friday (12 03 2021)
+![First Cypress Test](docs/build_blog/)
 ## General progress
-+ Added Graph for dummy data
+
 
 ## New Features
-
++ No new general features
 ## New Bugs
++ No new bugs found
 
 ## Tooling update
++ No tooling updates
+
+## Lessons Learnt
 + 
+
+## Useful Resources
++ 
++ 
+
+***
+# Week 2 - Friday (5 03 2021)
+![Dummy Graph of grades](docs/build_blog/week2-screenshot-02.png)
+## General progress
++ Added Graph for dummy data
++ Improved styling for graph
+
+## New Features
++ No new general features
+## New Bugs
++ Graph isn't responsive and doesn't scale with the number of topics 
+
+## Tooling update
++ No tooling updates
 
 ## Lessons Learnt
 + D3 visualisations are quite brittle and it requires a unique selector for all element types that will be drawn (e.g. the total bar vs the impact on total bar)
