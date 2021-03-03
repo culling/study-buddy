@@ -12,26 +12,26 @@ class GradesGraph extends HTMLElement {
       {
         courseShortName: "COMP307",
         courseFullName: "Introduction to Artificial Intelligence",
-        finalGradeImpactPercent: 40.52369008,
-        sumTotalFinalGrade: 70,
+        currentGradeTotal: 40.52369008,
+        maximumPossibleGrade: 70,
       },
       {
         courseShortName: "STAT292",
         courseFullName: "Applied Statistics 2A",
-        finalGradeImpactPercent: 86.99095588,
-        sumTotalFinalGrade: 101.75,
+        currentGradeTotal: 86.99095588,
+        maximumPossibleGrade: 101.75,
       },
       {
         courseShortName: "SWEN301",
         courseFullName: "Structured Methods",
-        finalGradeImpactPercent: 90.13,
-        sumTotalFinalGrade: 100,
+        currentGradeTotal: 90.13,
+        maximumPossibleGrade: 100,
       },
       {
         courseShortName: "SWEN326",
         courseFullName: "Safety-Critical Systems",
-        finalGradeImpactPercent: 88.78287179,
-        sumTotalFinalGrade: 100,
+        currentGradeTotal: 88.78287179,
+        maximumPossibleGrade: 100,
       },
     ];
   }
@@ -46,7 +46,7 @@ class GradesGraph extends HTMLElement {
 
       .grades-graph-container {
         display: grid;
-        grid-template-columns: 1fr 500px 1fr;
+        grid-template-columns: 1fr auto 1fr;
         gap: 15px 10px;
         grid-template-areas: ". grades-graph .";
         justify-items: center;
@@ -81,14 +81,16 @@ class GradesGraph extends HTMLElement {
       return course.courseShortName;
     });
 
-    console.log("Labels: ", labels);
-    
     const graphTheme = {
       total:{
-        fill: "#1E90FF"
+        fill: "#1E90FF",
+        stroke: "#0E80EF",
+        offset: 5
       },
       impact:{
-        fill: "#87CEEB"
+        fill: "#87CEEB",
+        stroke: "#77BEDB",
+        offset: 0
       }
     }
 
@@ -96,7 +98,7 @@ class GradesGraph extends HTMLElement {
       height: 120,
       width: 500,
       margins: {
-        left: 0,
+        left: 30,
         top: 30,
         bottom: 30
       },
@@ -118,29 +120,32 @@ class GradesGraph extends HTMLElement {
       .style("height",  svgConfig.margins.top + svgConfig.height + svgConfig.margins.bottom)
       .style("width", svgConfig.width);
 
-    //Add the bars
-    const bars = svg
+    // -- Add the bars --
+    // maximum potential grade grade
+    svg
       .selectAll(".bar.field1")
       .data(data)
       .enter()
       .append("rect")
       .attr("class", "bar field1")
       .attr("x", (d, i) => {
-        return i * svgConfig.bar.width;
+        return this.getBarDrawingX(svgConfig, i, graphTheme.total.offset);
       })
       .attr("y", (d) => {
-        return this.getBarDrawingHeight(svgConfig) - d.sumTotalFinalGrade;
+        return this.getBarDrawingHeight(svgConfig) - d.maximumPossibleGrade;
       })
       .style("width", svgConfig.bar.width - svgConfig.bar.margins.left)
       .style("height", (d) => {
-        return d.sumTotalFinalGrade;
+        return d.maximumPossibleGrade;
       })
       .style("fill", graphTheme.total.fill)
+      .style("stroke", graphTheme.total.stroke)
       .append("title")
       .text((d)=>{
         return d.courseFullName;
       });
 
+    // actual grade
     svg
       .selectAll(".bar.field2")
       .data(data)
@@ -148,16 +153,17 @@ class GradesGraph extends HTMLElement {
       .append("rect")
       .attr("class", "bar field2")
       .attr("x", (d, i) => {
-        return i * svgConfig.bar.width;
+        return this.getBarDrawingX(svgConfig, i, graphTheme.impact.offset);
       })
       .attr("y", (d) => {
-        return this.getBarDrawingHeight(svgConfig) - d.finalGradeImpactPercent;
+        return this.getBarDrawingHeight(svgConfig) - d.currentGradeTotal;
       })
       .style("width", svgConfig.bar.width - svgConfig.bar.margins.left)
       .style("height", (d) => {
-        return d.finalGradeImpactPercent;
+        return d.currentGradeTotal;
       })
       .style("fill", graphTheme.impact.fill)
+      .style("stroke", graphTheme.impact.stroke)
       .append("title")
       .text((d)=>{
         return d.courseFullName;
@@ -170,25 +176,65 @@ class GradesGraph extends HTMLElement {
       .enter()
       .append("text")
       .attr("x", (d, i) => {
-        return i * svgConfig.bar.width;
+        return this.getBarDrawingX(svgConfig, i, 0);
       })
       .attr("y", (d, i) => {
-        const labelHeight = this.getBarDrawingHeight(svgConfig) + svgConfig.margins.bottom;
-        if (labelHeight > 0) {
-          return labelHeight;
-        }
-        return labelHeight + 3;
+        return this.getBarDrawingHeight(svgConfig) + svgConfig.margins.bottom - 5;
       })
       .text((d) => {
         return d.courseShortName;
       });
 
+    // Add y axis
+    const yScale = d3.scaleLinear()
+    .domain([0, d3.max(data, (d) => d.maximumPossibleGrade)])
+    .range(this.getRange(svgConfig, data));
+    const yAxis = d3.axisLeft(yScale);
 
+      svg.append("g")
+      .attr("transform", `translate(${svgConfig.margins.left}, ${-1 * svgConfig.margins.bottom })`)
+      .call(yAxis);
+
+      // Add Top and bottom box lines
+      // this.drawTopLine(svg, svgConfig, data);
+      this.drawBottomLine(svg, svgConfig, data);
+      
   };
 
   getBarDrawingHeight = (svgConfig)=>{
     return svgConfig.height + svgConfig.margins.top;
   }
+
+  getBarDrawingX= (svgConfig, i, additionalOffset)=>{
+    return (i * svgConfig.bar.width) + svgConfig.margins.left + additionalOffset;
+  }
+
+  getRange = (svgConfig, data)=>{
+    return [this.getBarDrawingHeight(svgConfig) + svgConfig.margins.bottom, this.getBarDrawingHeight(svgConfig) - (d3.max(data, (d) => d.maximumPossibleGrade) - svgConfig.margins.bottom) ];
+  }
+
+  drawTopLine = (svg, svgConfig, data)=>{
+    svg.append("line")
+    .style("stroke", "black")
+    .style("stroke-width", 1)
+    .attr("x1", 0)
+    .attr("y1", this.getRange(svgConfig, data)[1])
+    .attr("x2", svgConfig.width)
+    .attr("y2", this.getRange(svgConfig, data)[1])
+    .attr("transform", `translate(${svgConfig.margins.left}, ${-1 * svgConfig.margins.bottom })`)
+  }
+
+  drawBottomLine = (svg, svgConfig, data) =>{
+    svg.append("line")
+      .style("stroke", "black")
+      .style("stroke-width", 1)
+      .attr("x1", 0)
+      .attr("y1", this.getRange(svgConfig, data)[0])
+      .attr("x2", svgConfig.width)
+      .attr("y2", this.getRange(svgConfig, data)[0])
+      .attr("transform", `translate(${svgConfig.margins.left}, ${-1 * svgConfig.margins.bottom })`)
+  }
+
 }
 
 customElements.define("grades-graph", GradesGraph);
