@@ -1,3 +1,33 @@
+***
+# Week 3 - Friday (12 03 2021)
+![Loaded data from LocalStorage](docs/build_blog/week3-screenshot-01.png)
+## General progress
++ Sick for most of the week
++ Started on the page that will accept subject data
++ With the idea that you can put off more difficult choices and implementations until later, local storage is to be used to avoid issues with authentication and get straight to a potential MVP
+
+## New Features
++ Added a strategy for localStorage
+## New Bugs
++ Subjects page isn't functional 
+
+## Tooling update
++ Cypress now includes ways of dealing with local storage, allowing it to persist between tests.
++ Tests are now changed to a function that is called within the it block e.g.
+```
+ it("desc", ()=>{ when();})
+```
+This allows for the code to be a little more separated and could allow for the descriptions of the test to still work, while allowing for auto retry to cover all of the previous steps (given, when, then )
+
+
+## Lessons Learnt
++ Cypress clears all localStorage between each test
++ If cypress and a nodejs server are using the same port then there can be messages of XSRF, using the --port option can allow a port to be manually specified.
+
+
+## Useful Resources
++ Persisting local storage across tests - https://stackoverflow.com/questions/50471047/preserve-cookies-localstorage-session-across-tests-in-cypress 
+
 
 ***
 # Week 2 - Friday (5 03 2021)
