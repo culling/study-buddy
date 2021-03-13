@@ -1,4 +1,25 @@
 ***
+# Week 4 - Friday (19 03 2021)
+![Subjects web component card](docs/build_blog/week4-screenshot-01.png)
+## General progress
++ Started work on subject input card as a web component
++ Signed up for pluralsight for courses related to UX design
+
+## New Features
++ No new features added
+## New Bugs
++ Subjects page isn't functional 
+
+## Tooling update
++ No changes in tooling
+
+## Lessons Learnt
++ Grid layout is useful, but divs are possibly better as a first attempt for layouts
+
+## Useful Resources
++ pluralsight.com - has a special rate for old "code school" subscribers. 
+
+***
 # Week 3 - Friday (12 03 2021)
 ![Loaded data from LocalStorage](docs/build_blog/week3-screenshot-01.png)
 ## General progress
