@@ -13,20 +13,19 @@ class SubjectsContainer extends HTMLElement {
         return localStorageStrategy;
     }
 
-    setInnerHtml(shadowRoot){
+    setInnerHtml(shadowDom){
         const subjects = this.storageStrategy.load("subjects");
         const prettyJsonString = JSON.stringify(subjects,null,"</br>");
         console.log("prettyJsonString: ", prettyJsonString);
-        shadowRoot.innerHTML = `
-        <p>subjectsContainer
-        ${prettyJsonString}
-        </p>`;
+        shadowDom.innerHTML = `
+        <div>subjectsContainer
+            <subject-card></subject-card>
+        </div>`;
     }
 
     connectedCallback() {
 
     }
-
 }
 
 customElements.define('subjects-container', SubjectsContainer);
