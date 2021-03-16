@@ -4,20 +4,27 @@
 ## General progress
 + Started work on subject input card as a web component
 + Signed up for pluralsight for courses related to UX design
-
++ Created test for input of a new subject, and learnt a lot about cypress and the shadow dom
 ## New Features
 + No new features added
 ## New Bugs
 + Subjects page isn't functional 
 
 ## Tooling update
-+ No changes in tooling
++ Updated tests to include querying shadow doms
 
 ## Lessons Learnt
 + Grid layout is useful, but divs are possibly better as a first attempt for layouts
++ Shadow dom is now supported - but difficult to deal with if not using the "includeShadowDom" flag in cypress.json
++ There are issues with using clear() followed by type(....) that can be avoided by using the combined long form of .type(`{selectall}{backspace}${...mytext variable here....}`, {force: true});
++ The type force:true option is sometimes needed, including when dealing with multiple inputs 
+
 
 ## Useful Resources
 + pluralsight.com - has a special rate for old "code school" subscribers. 
++ Force typing into inputs - https://github.com/cypress-io/cypress/issues/5830
++ What the clear command actually does - https://docs.cypress.io/api/commands/clear.html#Documentation
++ Options to get within the shadow dom - https://docs.cypress.io/api/commands/get.html#Arguments
 
 ***
 # Week 3 - Friday (12 03 2021)
