@@ -1,7 +1,7 @@
 // subjects-container
 // import { config } from '../../server/config';
 // const port = config.port;
-
+import { assert } from "chai";
 import { settings } from "./../../support/settings";
 console.log("settings: ", settings);
 const baseUrl = settings.urls.base;
@@ -145,13 +145,13 @@ describe("Add subject", () => {
 
         given();
         when();
-        // then();
+        then();
     });
     const testCourse = {
         courseShortName: "TEST101",
         courseFullName: "Study Buddy - Testing With Cypress",
-        currentGradeTotal: 40.52369008,
-        maximumPossibleGrade: 70,
+        currentGradeTotal: 88.0,
+        maximumPossibleGrade: 100,
     }
 
     const given = () => {
@@ -169,6 +169,8 @@ describe("Add subject", () => {
 
     const then = () => {
         const subjectsFromLocalStorage = window.localStorage.getItem("subjects");
+        // expect(subjectsFromLocalStorage).to.not.be.null;
+        assert.isNotNull(subjectsFromLocalStorage, "subjects from localStorage");
         console.log("subjectsFromLocalStorage: ", subjectsFromLocalStorage);
         expect(subjectsFromLocalStorage.length).to.be.gt(0);
     }
