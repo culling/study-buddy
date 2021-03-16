@@ -2,7 +2,9 @@
 // import { config } from '../../server/config';
 // const port = config.port;
 
-const baseUrl = `http://localhost:5000`;
+import { settings } from "./../../support/settings";
+console.log("settings: ", settings);
+const baseUrl = settings.urls.base;
 console.log(`baseUrl: ${baseUrl}`);
 
 describe('Canary Test', () => {
@@ -113,8 +115,8 @@ describe("Loading Data", () => {
             ];
             cy.setLocalStorage("subjects", subjectInfo);
         }
-        
-        const when = () => { 
+
+        const when = () => {
             cy.visit(baseUrl);
         }
         const then = () => {
@@ -126,7 +128,48 @@ describe("Loading Data", () => {
                     expect(subjectsFromLocalStorage.length).to.be.gt(0);
                 });
         }
+    });
+});
 
+describe("Add subject", () => {
+    it(`GIVEN 
+    local storage does not contain any subjects
+    WHEN
+    The user is on the subjects page
+    The course name and the course code are input
+    Add subject is clicked
+    THEN
+    It should have added the subject to the local storage for subjects
+    `, () => {
+        expect(true).to.equal(true);
 
-    })
-})
+        given();
+        when();
+        // then();
+    });
+    const testCourse = {
+        courseShortName: "TEST101",
+        courseFullName: "Study Buddy - Testing With Cypress",
+        currentGradeTotal: 40.52369008,
+        maximumPossibleGrade: 70,
+    }
+
+    const given = () => {
+        console.log("given hit!");
+        cy.clearLocalStorage();
+    }
+
+    const when = () => {
+        console.log("when hit!");
+        cy.visit(`${settings.urls.base}`);
+        cy.get("#course-name").type(`{selectall}{backspace}${testCourse.courseFullName}`, {force: true});
+        cy.get("#course-code").type(`{selectall}{backspace}${testCourse.courseShortName}`, {force: true});
+        cy.get("#add-subject-button").click();
+    }
+
+    const then = () => {
+        const subjectsFromLocalStorage = window.localStorage.getItem("subjects");
+        console.log("subjectsFromLocalStorage: ", subjectsFromLocalStorage);
+        expect(subjectsFromLocalStorage.length).to.be.gt(0);
+    }
+});

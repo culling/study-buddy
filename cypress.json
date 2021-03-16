@@ -1,1 +1,4 @@
-{}
+{
+    "experimentalShadowDomSupport": true,
+    "includeShadowDom": true
+}

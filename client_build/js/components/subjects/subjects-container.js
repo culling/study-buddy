@@ -15,8 +15,7 @@ class SubjectsContainer extends HTMLElement {
 
     setInnerHtml(shadowDom){
         const subjects = this.storageStrategy.load("subjects");
-        const prettyJsonString = JSON.stringify(subjects,null,"</br>");
-        console.log("prettyJsonString: ", prettyJsonString);
+
         shadowDom.innerHTML = `
         <div>subjectsContainer
             <subject-card></subject-card>

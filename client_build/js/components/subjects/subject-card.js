@@ -21,14 +21,15 @@ class SubjectCard extends HTMLElement {
         <div class="shadowed-card-container subject-card">
             
             <div class="card-input">
-                <div>Short label 1</div>
-                <input type="text" value="Short Value 1"></input>
+                <div>Course Name</div>
+                <input id="course-name" type="text" value="Course Name" ></input>
             </div>
-            
+
             <div class="card-input">
-                <div>Short label 2</div>
-                <input type="text" value="Short Text 2" ></input>
+                <div>Course Code</div>
+                <input id="course-code" type="text" value="Course Code"></input>
             </div>
+        
 
            <div class="card-footer">
                 <button id="add-subject-button" class="add-subject-button">Add Subject</button>
@@ -44,7 +45,7 @@ class SubjectCard extends HTMLElement {
 
     addSubjectButtonClick(){
         console.log('Add Subject Button clicked!');
-
+        
     }
 }
 
