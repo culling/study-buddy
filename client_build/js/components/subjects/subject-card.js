@@ -1,18 +1,18 @@
-import("../../data/local/localStorage.js");
+// import("../../../js/data/local/localStorage.js");
 class SubjectCard extends HTMLElement {
     constructor() {
         super();
         const shadowRoot = this.attachShadow({ mode: 'open' });
         this.storageStrategy = this.getDataStrategy();
-
-        this.setInnerHtml(shadowRoot);
+        console.log("this.storageStrategy: ", this.storageStrategy);
+        this.setInnerHtml(shadowRoot, this.storageStrategy);
     }
 
-    getDataStrategy(){
+    getDataStrategy() {
         return localStorageStrategy;
     }
 
-    setInnerHtml(shadowDom){
+    setInnerHtml(shadowDom, storageStrategy) {
         shadowDom.innerHTML = `
         <style>
             @import "css/main.css"
@@ -35,7 +35,9 @@ class SubjectCard extends HTMLElement {
                 <button id="add-subject-button" class="add-subject-button">Add Subject</button>
            </div> 
         </div>`;
-        shadowDom.getElementById("add-subject-button").onclick=this.addSubjectButtonClick;
+        
+        
+        shadowDom.getElementById("add-subject-button").onclick = ()=>{ this.addSubjectButtonClick(storageStrategy) };
         // shadowRoot.firstElementChild.onclick=this.buttonClick;
     }
 
@@ -43,9 +45,15 @@ class SubjectCard extends HTMLElement {
 
     }
 
-    addSubjectButtonClick(){
+    addSubjectButtonClick(storageStrategy) {
         console.log('Add Subject Button clicked!');
-        
+        console.log("storageStrategy: ", storageStrategy);
+        storageStrategy.add("subjects", {
+            courseShortName: "SWEN301",
+            courseFullName: "Structured Methods",
+            currentGradeTotal: 90.13,
+            maximumPossibleGrade: 100,
+        });
     }
 }
 

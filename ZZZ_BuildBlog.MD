@@ -1,4 +1,23 @@
 ***
+# Week 5 - Friday (26 03 2021)
+![Subjects web component card](docs/build_blog/week5-screenshot-01.png)
+## General progress
++ The weekend was largely taken by making Ramen from scratch
++ Using the localstorage function to save and load new subjects
+## New Features
++ 
+## New Bugs
++ 
+## Tooling update
++ Updated tests to include querying shadow doms
+
+## Lessons Learnt
++ 
+
+## Useful Resources
++ Ramen - https://glebekitchen.com/tonkotsu-ramen-home/
+
+***
 # Week 4 - Friday (19 03 2021)
 ![Subjects web component card](docs/build_blog/week4-screenshot-01.png)
 ## General progress

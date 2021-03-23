@@ -20,6 +20,10 @@ class SubjectsContainer extends HTMLElement {
         <div>subjectsContainer
             <subject-card></subject-card>
         </div>`;
+
+        window.addEventListener('storage', function(e) {
+            console.log(e.key, e.oldValue,e.newValue, e.url, e.storageArea);
+        });
     }
 
     connectedCallback() {

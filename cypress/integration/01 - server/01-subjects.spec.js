@@ -132,6 +132,14 @@ describe("Loading Data", () => {
 });
 
 describe("Add subject", () => {
+    beforeEach(() => {
+        cy.restoreLocalStorage();
+    });
+
+    afterEach(() => {
+        cy.saveLocalStorage();
+    });
+
     it(`GIVEN 
     local storage does not contain any subjects
     WHEN
@@ -141,8 +149,6 @@ describe("Add subject", () => {
     THEN
     It should have added the subject to the local storage for subjects
     `, () => {
-        expect(true).to.equal(true);
-
         given();
         when();
         then();
@@ -164,12 +170,13 @@ describe("Add subject", () => {
         cy.visit(`${settings.urls.base}`);
         cy.get("#course-name").type(`{selectall}{backspace}${testCourse.courseFullName}`, {force: true});
         cy.get("#course-code").type(`{selectall}{backspace}${testCourse.courseShortName}`, {force: true});
-        cy.get("#add-subject-button").click();
+        cy.get(".add-subject-button").click();
+        cy.wait(1.5 * 1000);
     }
 
     const then = () => {
         const subjectsFromLocalStorage = window.localStorage.getItem("subjects");
-        // expect(subjectsFromLocalStorage).to.not.be.null;
+        expect(subjectsFromLocalStorage).to.not.be.null;
         assert.isNotNull(subjectsFromLocalStorage, "subjects from localStorage");
         console.log("subjectsFromLocalStorage: ", subjectsFromLocalStorage);
         expect(subjectsFromLocalStorage.length).to.be.gt(0);
