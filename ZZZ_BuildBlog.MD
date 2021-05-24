@@ -1,13 +1,23 @@
 ***
+# End of project (25 05 2021)
+
+## General progress
++ I will be restarting development from scratch using different technologies. After a two month break from working on the project, I came back and found it difficult to get started with even minimal improvements. Many of these issues came from complications with shadowDom and shadowRoot.
+
+## Lessons Learnt
++ Applications made from web components are difficult to test and quickly build upon
+
+
+***
 # Week 5 - Friday (26 03 2021)
 ![Subjects web component card](docs/build_blog/week5-screenshot-01.png)
 ## General progress
 + The weekend was largely taken by making Ramen from scratch
 + Using the localstorage function to save and load new subjects
 ## New Features
-+ 
++ load and save new subjects 
 ## New Bugs
-+ 
++ no new bugs added
 ## Tooling update
 + Updated tests to include querying shadow doms
 
