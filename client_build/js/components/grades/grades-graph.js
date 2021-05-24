@@ -71,7 +71,7 @@ class GradesGraph extends HTMLElement {
   }
 
   draw = (target, data) => {
-    console.log(
+    console.log( 
       "draw has been called with target: ",
       target,
       "\n and data: ",

@@ -31,7 +31,9 @@
     "start": "node -r ts-node/register ./server",
     "dev:be": "nodemon",
     "test": "jest",
-    "cypress": "./node_modules/.bin/cypress open --port 8080"
+    "cypress:local": "./node_modules/.bin/cypress open --port 8080",
+    "cypress": "npx cypress open --port 8080"
+
   },
   "author": "",
   "license": "ISC"

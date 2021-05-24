@@ -10,12 +10,12 @@ const localStorageStrategy = {};
  * @returns 
  */
 localStorageStrategy.save = (key, json)=>{
-    console.log("localStorageStrategy.save - hit!");
+    debugMessage(5, "localStorageStrategy.save - hit!");
     if(!!! json){
         console.error("Did you mean to delete?");
         return;
     }
-    console.log(key, json);
+    debugMessage(5, key, json);
     window.localStorage.setItem(key, JSON.stringify(json));
 }
 
@@ -26,7 +26,7 @@ localStorageStrategy.save = (key, json)=>{
  * @returns json
  */
 localStorageStrategy.load = (key)=>{
-    console.log("localStorageStrategy.load - hit!");
+    debugMessage(5, "localStorageStrategy.load - hit!");
     const rawString = window.localStorage.getItem(key);
     const json = JSON.parse(rawString);
     return json;
@@ -38,7 +38,7 @@ localStorageStrategy.load = (key)=>{
  * @param {string} key 
  */
 localStorageStrategy.delete = (key)=>{
-    console.log("localStorageStrategy.delete - hit!");
+    debugMessage(5, "localStorageStrategy.delete - hit!");
     window.localStorage.removeItem(key);
 }
 
@@ -52,9 +52,9 @@ localStorageStrategy.delete = (key)=>{
  * @param {json} data 
  */
 localStorageStrategy.add = (key, data)=>{
-    console.log("localStorageStrategy.add - Hit!");
+    debugMessage(5, "localStorageStrategy.add - Hit!");
     const raw = localStorageStrategy.load(key);
-    console.log("raw: ", raw);
+    debugMessage(5, "raw: ", raw);
     
     if ( (!!raw) && (!Array.isArray( raw )) ){
         console.error(key, "is not an array or null");
@@ -62,7 +62,7 @@ localStorageStrategy.add = (key, data)=>{
     }
 
     const json = (raw == null)? [] : raw;
-    console.log("json: ", json);
+    debugMessage(5, "json: ", json);
     json.push(data);
     localStorageStrategy.save(key, json);
 }

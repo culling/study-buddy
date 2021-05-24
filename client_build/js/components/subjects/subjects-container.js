@@ -22,7 +22,8 @@ class SubjectsContainer extends HTMLElement {
         </div>`;
 
         window.addEventListener('storage', function(e) {
-            console.log(e.key, e.oldValue,e.newValue, e.url, e.storageArea);
+            console.log("Storage Event triggered");
+            console.log(e.key, e.oldValue,e.newValue, e.url, e.storageArea);            
         });
     }
 

@@ -4,7 +4,8 @@ class SubjectCard extends HTMLElement {
         super();
         const shadowRoot = this.attachShadow({ mode: 'open' });
         this.storageStrategy = this.getDataStrategy();
-        console.log("this.storageStrategy: ", this.storageStrategy);
+        this.logLevel = 5; 
+        // debugMessage(this.logLevel, "this.storageStrategy: ", this.storageStrategy);
         this.setInnerHtml(shadowRoot, this.storageStrategy);
     }
 
@@ -37,22 +38,26 @@ class SubjectCard extends HTMLElement {
         </div>`;
         
         
-        shadowDom.getElementById("add-subject-button").onclick = ()=>{ this.addSubjectButtonClick(storageStrategy) };
-        // shadowRoot.firstElementChild.onclick=this.buttonClick;
+        shadowDom.getElementById("add-subject-button").onclick = ()=>{ 
+            const courseFullName = shadowDom.querySelector("#course-name").value;
+            const courseShortName = shadowDom.querySelector("#course-code").value;
+
+            this.addSubjectButtonClick(storageStrategy, courseFullName, courseShortName) 
+        };
     }
 
     connectedCallback() {
 
     }
 
-    addSubjectButtonClick(storageStrategy) {
-        console.log('Add Subject Button clicked!');
-        console.log("storageStrategy: ", storageStrategy);
+    addSubjectButtonClick(storageStrategy, courseFullName, courseShortName) {
+        debugMessage(this.logLevel, 'Add Subject Button clicked!');
+        // debugMessage(this.logLevel, "storageStrategy: ", storageStrategy);
         storageStrategy.add("subjects", {
-            courseShortName: "SWEN301",
-            courseFullName: "Structured Methods",
-            currentGradeTotal: 90.13,
-            maximumPossibleGrade: 100,
+            courseShortName: courseShortName,
+            courseFullName: courseFullName,
+            currentGradeTotal: 10,
+            maximumPossibleGrade: 10,
         });
     }
 }

@@ -8,7 +8,9 @@
         "forceConsistentCasingInFileNames": true,
         "jsx": "preserve",
         "types": ["node"],
-        "sourceMap": true
+        "sourceMap": true,
+        "baseUrl": "."
+
     },
     "$schema": "https://json.schemastore.org/tsconfig",
     "display": "Recommended"

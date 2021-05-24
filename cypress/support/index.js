@@ -15,6 +15,7 @@
 
 // Import commands.js using ES2015 syntax:
 import './commands';
+import './utils/debugLogger';
 import "./storageHelpers/localStorageHelper";
 import "./settings";
 // Alternatively you can use CommonJS syntax:

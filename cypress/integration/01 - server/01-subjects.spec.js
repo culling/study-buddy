@@ -1,7 +1,4 @@
-// subjects-container
-// import { config } from '../../server/config';
-// const port = config.port;
-import { assert } from "chai";
+import { assert, expect } from "chai";
 import { settings } from "./../../support/settings";
 console.log("settings: ", settings);
 const baseUrl = settings.urls.base;
@@ -14,43 +11,43 @@ describe('Canary Test', () => {
 });
 
 
-// describe('Subjects Container', () => {
-//     it(`GIVEN 
-//     The server is running
-//     `, ()=>{
-//         given();
-//     });
+describe('Subjects Container', () => {
+    it(`GIVEN 
+    The server is running
+    `, ()=>{
+        given();
+    });
 
-//     it(`WHEN 
-//     The user loads the homepage
-//     `, ()=>{
-//         when();
-//     });
+    it(`WHEN 
+    The user loads the homepage
+    `, ()=>{
+        when();
+    });
 
 
-//     it(`THEN 
-//     The subjects-container is displayed
-//     `, ()=>{
-//         then();
-//     });
+    it(`THEN 
+    The subjects-container is displayed
+    `, ()=>{
+        then();
+    });
 
-//     const given = ()=>{
+    const given = ()=>{
 
-//     }
+    }
 
-//     const when = ()=>{
-//         cy.visit(baseUrl);
-//     }
+    const when = ()=>{
+        cy.visit(baseUrl);
+    }
 
-//     const then = ()=>{
-//         cy.visit(baseUrl);
-//         cy.get("subjects-container")
-//         .should("be.visible");
-//         cy.get("subjects-container").should(($text)=>{
-//             expect($text).to.contain('subjectsContainer');
-//         });
-//     }
-// });
+    const then = ()=>{
+        cy.visit(baseUrl);
+        cy.get("subjects-container")
+        .should("be.visible");
+        cy.get("subjects-container").should(($text)=>{
+            expect($text).to.contain('subjectsContainer');
+        });
+    }
+});
 
 
 describe("Loading Data", () => {
@@ -141,13 +138,13 @@ describe("Add subject", () => {
     });
 
     it(`GIVEN 
-    local storage does not contain any subjects
-    WHEN
-    The user is on the subjects page
-    The course name and the course code are input
-    Add subject is clicked
-    THEN
-    It should have added the subject to the local storage for subjects
+        local storage does not contain any subjects
+        WHEN
+        The user is on the subjects page
+        The course name and the course code are input
+        Add subject is clicked
+        THEN
+        It should have added the subject to the local storage for subjects
     `, () => {
         given();
         when();
@@ -168,8 +165,8 @@ describe("Add subject", () => {
     const when = () => {
         console.log("when hit!");
         cy.visit(`${settings.urls.base}`);
-        cy.get("#course-name").type(`{selectall}{backspace}${testCourse.courseFullName}`, {force: true});
-        cy.get("#course-code").type(`{selectall}{backspace}${testCourse.courseShortName}`, {force: true});
+        cy.get("#course-name").type(`{selectall}{backspace}${testCourse.courseFullName}`, { force: true });
+        cy.get("#course-code").type(`{selectall}{backspace}${testCourse.courseShortName}`, { force: true });
         cy.get(".add-subject-button").click();
         cy.wait(1.5 * 1000);
     }
@@ -181,4 +178,57 @@ describe("Add subject", () => {
         console.log("subjectsFromLocalStorage: ", subjectsFromLocalStorage);
         expect(subjectsFromLocalStorage.length).to.be.gt(0);
     }
+});
+
+
+describe.only("Create new subject card", () => {
+    const testCourse = {
+        courseShortName: "TEST101",
+        courseFullName: "Study Buddy - Testing With Cypress",
+        currentGradeTotal: 88.0,
+        maximumPossibleGrade: 100,
+    }
+
+    beforeEach(() => {
+        cy.restoreLocalStorage();
+    });
+
+    afterEach(() => {
+        cy.saveLocalStorage();
+    });
+
+    it(`GIVEN 
+        local storage does not contain any subjects
+        WHEN
+        The user is on the subjects page
+        The course name and the course code are input
+        Add subject is clicked
+        THEN
+        It should have added the subject to the local storage for subjects
+    `, () => {
+        // console.log("given hit!");
+        cy.clearLocalStorage();
+    })
+
+    it("do", () => {
+        // console.log("when hit!");
+        cy.visit(`${settings.urls.base}`);
+        cy.get("#course-name").type(`{selectall}{backspace}${testCourse.courseFullName}`, { force: true });
+        cy.get("#course-code").type(`{selectall}{backspace}${testCourse.courseShortName}`, { force: true });
+        cy.get(".add-subject-button").click();
+        cy.wait(2.5 * 1000);
+    });
+    it("then", () => {
+        console.log("then hit!");
+        console.log(`cy.get("subject-card"):`, cy.get("subject-card"));
+
+        const subjectsFromLocalStorage = window.localStorage.getItem("subjects");
+        expect(subjectsFromLocalStorage).to.not.be.null;
+        expect(subjectsFromLocalStorage.length).to.be.gt(0);
+
+        // console.log("cy.get('subjects-container')", cy.get('subjects-container'));
+    });
+
+
+    
 });
